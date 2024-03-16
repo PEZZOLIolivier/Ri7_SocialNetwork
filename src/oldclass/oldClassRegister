@@ -1,0 +1,53 @@
+class RegisterController  {
+
+    public function index() {
+        // Affiche le formulaire d'inscription
+        require(__DIR__ . "/../views/register.php");
+    }
+
+    public function register() {
+        // Instancier la classe Database
+        $database = new Database();
+        $db = $database->connect();
+    
+        // Instancier la classe User en passant la connexion de la base de données
+        $user = new User($db);
+    
+        // Juste avant d'exécuter la requête SQL
+        echo $_POST['email'];
+        echo $_POST['username'];
+        echo $_POST['password'];
+    
+        // Traitement du formulaire d'inscription
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
+            // Récupérer les données du formulaire
+            $user->email = $_POST['email'];
+            $user->username = $_POST['username'];
+            $user->password = $_POST['password']; // Pas de hachage du mot de passe
+    
+            // Appeler la méthode register de la classe User
+            if ($user->register()) {
+                // Redirection après une inscription réussie, par exemple
+                header("Location: /success.php");
+                exit();
+            } else {
+                // Gérer les erreurs d'inscription
+                echo "Une erreur s'est produite lors de l'inscription.";
+            }
+        }
+    }
+    
+}
+
+// Instanciation du contrôleur
+$controller = new RegisterController();
+
+// Traitement de la requête
+$requestUri = $_SERVER['REQUEST_URI'];
+$baseUri = '/'; // Modifier selon la configuration de votre serveur
+$requestPath = parse_url($requestUri, PHP_URL_PATH);
+$route = str_replace($baseUri, '', $requestPath);
+
+?>
+
+
