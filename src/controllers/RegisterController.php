@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use Models\Database;
-use Models\User;
+use Models\UserDb;
 
 class RegisterController {
     public function index() {
@@ -16,10 +16,9 @@ class RegisterController {
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
 
-            // Vérifier si tous les champs sont remplis
             if (!empty($email) && !empty($username) && !empty($password)) {
                 $database = new Database();
-                $user = new User($database);
+                $user = new UserDb($database);
 
                 $user->setEmail($email);
                 $user->setUsername($username);

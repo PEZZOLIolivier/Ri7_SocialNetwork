@@ -8,22 +8,26 @@ use Controllers\LoginController;
 use Controllers\LogoutController;
 
 require_once __DIR__ . '/../src/controllers/LoginController.php';
-require_once __DIR__ . '/../src/controllers/LogoutController.php';
 
 class Router {
 
     public function start()
     {
-        // Capturer l'URI après "/index.php"
         $route = isset($_SERVER['PATH_INFO']) ? trim($_SERVER['PATH_INFO'], '/') : '';
 
-        // Debugging : Afficher la valeur de $route
-        // echo $route;
+        $controller = null;
 
-        $controller = null; // Initialisation à null par défaut
         switch ($route) {
             case '':
                 $controller = new MainController();
+                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'addPost') {
+                    $controller->addPost();
+                    // echo $controller;
+                } elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action']) && $_GET['action'] == 'deletePost') {
+                    $controller->deletePost();
+                } elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['action']) && $_GET['action'] == 'editPost') {
+                    $controller->editPost();
+                }
                 break;
             case 'register':
                 $controller = new RegisterController();
@@ -36,15 +40,13 @@ class Router {
             case 'logout':
                 $controller = new LogoutController();
                 $controller->logout();
-                break;
+                break; 
         }
 
-        // Vérification si le contrôleur a été initialisé
+        
         if ($controller !== null) {
-            // Appeler la méthode index du contrôleur
             $controller->index();
         } else {
-            // Gérer le cas où aucune route correspondante n'est trouvée
             echo "404 Not Found";
         }
     }
