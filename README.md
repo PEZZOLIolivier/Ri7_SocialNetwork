@@ -41,6 +41,10 @@ Devenez milliardaire grâce à la POO en concevant un mini réseau social :
   + Possibilité à l'utilisateur de modifier et/ou de supprimer ses posts.
   + Première revue du code. 
 
+## <center>Fix welcome bug</center> 
+- modification du code pour la suppression du bug sur le message de bienvenue hors session.
+- mise à jour du fichier README.md 
+
 
 
 last update 18 march 2024# Ri7_SocialNetwork

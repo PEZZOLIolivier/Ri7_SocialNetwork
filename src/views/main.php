@@ -10,10 +10,19 @@
 </head>
 <body class="h-screen">
 
-    <?php 
-        include('header.php'); 
-    ?>
-    <h1 class="text-center text-4xl font-bold sans-serif my-5">Bonjour <?php echo $_SESSION['username']; ?>, bienvenue sur le mini réseau social de Ri7</h1>
+<?php 
+    include('header.php'); 
+
+    // Vérifier si l'utilisateur est connecté
+    if(isset($_SESSION['username'])) {
+        // Si l'utilisateur est connecté
+        echo '<h1 class="text-center text-4xl font-bold sans-serif my-5">Bonjour ' . $_SESSION['username'] . ', bienvenue sur le mini réseau social de Ri7</h1>';
+    } else {
+        // Si personne n'est connecté
+        echo '<h1 class="text-center text-4xl font-bold sans-serif my-5">Bienvenue sur le mini réseau social de Ri7</h1>';
+    }
+?>
+
     <div class="flex flex-col">
     <div class="bg-gray-200 flex-1 overflow-y-scroll">
         <div class="px-4 py-2">
